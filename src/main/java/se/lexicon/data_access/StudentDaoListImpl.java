@@ -34,6 +34,6 @@ public class StudentDaoListImpl implements StudentDao{
 
     @Override
     public void delete(int id) {
-        students.stream().filter(student -> student.getId() == id).findFirst().ifPresent(studentMatched -> students.remove(studentMatched));
+        students.removeIf(student -> student.getId()==id);
     }
 }
