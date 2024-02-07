@@ -23,22 +23,26 @@ public class StudentManagementConsoleImpl implements StudentManagement {
     public Student create() {
         System.out.println("Enter Student name : ");
         String name = userInputService.getString();
+        if(name.isBlank()) throw new IllegalArgumentException("Student name was empty!");
         return new Student(name);
     }
 
     @Override
     public Student save(Student student) {
+        if(student == null) throw new IllegalArgumentException("Student was null!");
         studentDao.save(student);
         return student;
     }
 
     @Override
     public Student find(int id) {
+        if(id==0) throw new IllegalArgumentException("Id was empty!");
         return studentDao.find(id);
     }
 
     @Override
     public Student remove(int id) {
+        if(id==0) throw new IllegalArgumentException("Id was empty!");
         Student student = studentDao.find(id);
         studentDao.delete(student.getId());
         return student;
@@ -51,9 +55,9 @@ public class StudentManagementConsoleImpl implements StudentManagement {
 
     @Override
     public Student edit(Student student) {
+        if(student == null) throw new IllegalArgumentException("Student was null!");
         Student studentMatched = studentDao.find(student.getId());
         studentMatched.setName(student.getName());
-        studentDao.delete(student.getId());
-        return studentDao.save(studentMatched);
+        return student;
     }
 }
